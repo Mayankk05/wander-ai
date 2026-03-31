@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://maps.googleapis.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript">
+      // Restoration script for Single Page Apps on GitHub Pages
+      (function(l) {
+        if (l.search[1] === 'p' && l.search[2] === '=') {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&');
+          }).filter(function(s) {
+            return s.slice(0, 2) === 'p=';
+          })[0].slice(2);
+          if (decoded !== l.pathname.slice(0, decoded.length)) {
+            window.history.replaceState(null, null,
+              l.pathname.slice(0, l.pathname.length - l.search.length) + decoded +
+              (l.search.slice(1).split('&').filter(function(s) {
+                return s.slice(0, 2) === 'q=';
+              })[0] || '').slice(2).replace(/~and~/g, '&') +
+              l.hash
+            );
+          }
+        }
+      }(window.location));
+    </script>
+    <title>WanderAI — Your Intelligent Travel Concierge</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

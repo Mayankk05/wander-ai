@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id                String     @id @default(cuid())
+  name              String
+  email             String     @unique
+  password          String
+  image             String?
+  bio               String?
+  location          String?
+  emailVerified     Boolean    @default(false)
+  verificationToken String?
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @default(now()) @updatedAt
+  trips             Trip[]
+  refreshTokens     RefreshToken[]
+}
+
+model RefreshToken {
+  id          String   @id @default(cuid())
+  token       String   @unique
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt   DateTime
+  revoked     Boolean  @default(false)
+  replacedBy  String?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+}
+
+model Trip {
+  id            String         @id @default(cuid())
+  title         String
+  destination   String
+  days          Int
+  budget        Int
+  itinerary     Json
+  history       Json           @default("[]")
+  isPublic      Boolean        @default(false)
+  shareLink     String?        @unique
+  overBudget    Boolean        @default(false)
+  imageUrl      String?
+  userId        String
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collaborators Collaborator[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now()) @updatedAt
+
+  @@index([userId])
+}
+
+model Collaborator {
+  id       String  @id @default(cuid())
+  email    String
+  role     String
+  tripId   String
+  trip     Trip    @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  userId   String?
+  userName String?
+
+  @@index([tripId])
+  @@index([email])
+  @@index([userId])
+}
