@@ -240,7 +240,3 @@ npm run lint
 - **Prisma connection errors?** Verify `DATABASE_URL` and `DIRECT_URL`.
 
 ---
-
-## License
-
-Add a license if you plan to open-source this project (MIT is common).
